@@ -17,5 +17,14 @@ CRP-1452;CRP-1452 Correcting host and port env variable name.
 CRP-1453;CRP-1453 Added account security coreplatform client config to increase timeout
 ```
 
+Run application:
+```
+python GoHTMLParserRunner.py gooutput.html commits.txt
+```
+Run test:
+```
+python -m unittest GoHTMLParserTest
+```
+
  
  
