@@ -1,0 +1,793 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+    Compare Pipelines Page - Go
+</title>
+
+<link debug="false" href="/go/assets/application-750846bd64b5d81ce756dad612d2066e40e3601127e5ce900762f2fa5d84b43a.css" media="all" rel="stylesheet" />
+<link debug="false" href="/go/assets/patterns/application-c9db0dc0617cde7ef9b33ba196098beaae0b2c749ab3fa4515eb27c5aab6f3f1.css" media="all" rel="stylesheet" />
+
+<script debug="false" src="/go/assets/application-66fb2fd00f947b6f4ecfdadc93d38c9984827b2da011d54ef7e8610ef4b3f8e1.js"></script>
+<![if !IE]>
+    <script src="/go/assets/lib/d3-3.1.5.min-a8bc188bf658d35d44f7dfc030984253b60843821bffa82b54edd65740c8174b.js"></script>
+<![endif]>
+<!--[if gt IE 8]><!-->
+    <script src="/go/assets/lib/d3-3.1.5.min-a8bc188bf658d35d44f7dfc030984253b60843821bffa82b54edd65740c8174b.js"></script>
+<!--<![endif]-->
+
+
+<link rel="shortcut icon" href="/go/assets/cruise-1592088ba651470e554a54371b6be6b1336462c2186e74fb24f54f177377b538.ico"/>
+</head>
+<body id="comparison" class="comparison">
+<div id="body_bg">
+    <div id="header">
+        <div class="header clear_float">
+  <a href="/go/pipelines" id="application_logo">&nbsp;</a>
+  <div class="application_nav">
+  <input id="server_timestamp" name="server_time" type="hidden" value="1461849195" />        <ul class="user">
+          <li class="help">
+            <a href="https://go.cd/help" target="_blank">Need Help?</a>
+          </li>
+            <li class="current_user icon">
+                <a href="#" class="current_user_name dropdown-arrow-icon">Kayan Azimov</a>
+                <ul class='enhanced_dropdown hidden'>
+                    <li>
+                        <a href="/go/tab/mycruise/user">Preferences</a>
+                    </li>
+                    <li class="logout">
+                        <a class="sign_out" href="/go/auth/logout" id="nav-logout">Sign out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="notifications">
+            <span class="bell"></span>
+            <div class="hover-container">
+                <div class="hover">
+                    <span>A new release of GoCD - <a href="http://www.go.cd/download/" target="_blank">16.4.0-3223</a> is available.</span>
+                </div>
+            </div>
+        </div>
+
+    <ul class="tabs">
+        <li id='cruise-header-tab-pipelines' class="">
+            <a href="/go/pipelines">PIPELINES</a>        </li>
+        <li id='cruise-header-tab-environments' class="">
+            <a href="/go/environments">ENVIRONMENTS</a>        </li>
+        <li id='cruise-header-tab-agents' class="">
+            <a href="/go/agents">AGENTS</a>        </li>
+        <li id="cruise-header-tab-admin" class="">
+                <a class="dropdown-arrow-icon" data-toggle="dropdown" href="#">ADMIN</a>                <ul class="dropdown-menu" role="menu">
+                        <li role="presentation">
+    <a href="/go/admin/pipelines">Pipelines</a></li>
+<li role="presentation">
+    <a href="/go/admin/templates">Templates</a></li>
+<li role="presentation">
+    <a href="/go/admin/config_xml">Config XML</a></li>
+<li role="presentation">
+    <a href="/go/admin/config/server">Server Configuration</a></li>
+<li role="presentation">
+    <a href="/go/admin/users">User Summary</a></li>
+<li role="presentation">
+    <a href="/go/oauth/admin/clients">OAuth Clients</a></li>
+<li role="presentation">
+    <a href="/go/admin/gadgets/oauth_clients">OAuth Enabled Gadget Providers</a></li>
+<li role="presentation">
+    <a href="/go/admin/backup">Backup</a></li>
+<li role="presentation">
+    <a href="/go/admin/plugins">Plugins</a></li>
+<li role="presentation">
+    <a href="/go/admin/package_repositories/new">Package Repositories</a></li>
+                </ul>
+        </li>
+    </ul>
+    <div class="error_messaging_counter">
+  <div id="cruise_message_counts" class="cruise_messages">
+  </div>
+  <div id="cruise_message_body" style="display:none;">
+  </div>
+
+     <script type="text/javascript">
+        Util.on_load(function() {new AjaxRefresher('/go/server/messages.json', null);});
+     </script>
+</div>
+</div>
+<div id="back_to_top" class='back_to_top' title="Scroll to Top">Top</div>
+
+</div>
+    </div>
+
+    <div id='body_content'>
+        <div class="messaging_wrapper" id="messaging_wrapper">
+            <div class="flash" id="message_pane">
+</div>
+
+        </div>
+        <div id="pipeline_header">
+            <div class="entity_status_wrapper page_header">
+                <ul class="entity_title">
+    <!--<li><a href="/go/pipelines">Pipelines</a></li>-->
+    <li class="name"><a href="/go/tab/pipeline/history/deploy-coreplatform-to-pp-cd">deploy-coreplatform-to-pp-cd</a></li>
+
+         <li class="last"><h1>Compare</h1> </li>
+
+</ul>
+            </div>
+        </div>
+        <div class="content_wrapper_outer"><div class="content_wrapper_inner">
+        <div id="pipeline_status_bar" class="pipeline_flow">
+            <table>
+                <tbody>
+                    <tr>
+                        <td width="360px" valign="top"><div class="compare_pipeline_page pipeline">
+    <div class="current_instance" id='compare_pipeline_from'>
+        <input class="compare_pipeline_input" id="from_pipeline" name="from_pipeline" type="text" value="1221" />        <div class="autocomplete"></div>
+        <div class="enhanced_dropdown from hidden">
+            <div class="compare_search_instructions">
+                <p>Search for a pipeline instance by label, commiter, date, etc.</p>
+                <p>or</p>
+                <p><a class="more_pipelines" id="browse_timeline_link_from">
+                    Browse the timeline
+                 </a></p>
+            </div>
+        </div>
+    </div>
+        <div class="selected_pipeline_from stages">
+            <div class="pipeline_details">
+                
+    <div style='width: 48.0%' class="stage">
+        <div class="stage_bar_wrapper">
+                <a href="/go/pipelines/deploy-coreplatform-to-pp-cd/1221/deploy/1">
+                    <div  class="stage_bar Passed" title="deploy (Passed)">
+                        
+                    </div>
+                </a>
+        </div>
+    </div>
+
+    <div style='width: 48.0%' class="stage">
+        <div class="stage_bar_wrapper">
+                <a href="/go/pipelines/deploy-coreplatform-to-pp-cd/1221/verify-deploy/2">
+                    <div  class="stage_bar Failed" title="verify-deploy (Failed)">
+                        
+                    </div>
+                </a>
+        </div>
+    </div>
+<div class="triggered_by">
+    <span class='label'>Automatically triggered</span>&nbsp;on&nbsp;<span class='time'>25 Apr, 2016 at 15:08:49 [+0000]</span></div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+    Util.on_load(function() {
+        var pipelineSelector = "#from_pipeline";
+        jQuery(pipelineSelector).autocomplete("/go/compare/deploy-coreplatform-to-pp-cd/list/compare_with/1225", {
+            minChars: 1,
+            width: 500,
+            scrollHeight: 500,
+            matchContains: "word",
+            selectFirst: false,
+            autoFill: false,
+            delay: 1000,
+            cacheLength: 0,
+            multiClickTrigger: false,
+            formatItem: function(row, i, max) {
+                return row;
+            },
+            formatMatch: function(row, i, max) {
+                return "";
+            },
+            formatResult: function(row) {
+                return row.value;
+            },
+            parse: function(data) {
+                return data.html;
+            },
+            dataType: 'json',
+            highlight: function(value, term) {
+                return value;//no-op
+            }
+        });
+        jQuery(pipelineSelector).result(function(event, data, formatted) {
+            var dest = compare_path("from", formatted, "1225");
+            if (formatted == -1) { // indicates no match, see list.json.erb
+                resetField(event.target);
+            } else {
+                window.location.href = dest;
+            }
+        });
+        jQuery(pipelineSelector).blur(function(event) {
+            var val = jQuery.trim(jQuery(event.target).val());
+            if (val == "" || val != '1221') {
+                resetField(event.target);
+            }
+        });
+        function resetField(field) {
+            jQuery(field).val('1221');
+        }
+
+        ;
+        function compare_path(suffix, counter, fixed_counter) {
+            if (suffix == "from") {
+                var from_counter = counter;
+                var to_counter = fixed_counter;
+            } else {
+                var from_counter = fixed_counter;
+                var to_counter = counter;
+            }
+            return "/go/compare/deploy-coreplatform-to-pp-cd/" + from_counter + "/with/" + to_counter;
+        }
+
+        var instructionsPopup = new MicroContentPopup(jQuery('.enhanced_dropdown.from').get(0), new MicroContentPopup.NoOpHandler());
+        var instructionsPopupShower = new MicroContentPopup.ClickShower(instructionsPopup);
+        jQuery(pipelineSelector).bind('keypress', function(event){
+            instructionsPopupShower.close();
+        });
+        instructionsPopupShower.bindShowButton( jQuery(pipelineSelector).get(0));
+
+        jQuery("#browse_timeline_link_from").click(function(event) {
+           Modalbox.show('/go/compare/deploy-coreplatform-to-pp-cd/timeline/1?other_pipeline_counter=1225&amp;suffix=from',
+                {
+                    overlayClose: false,
+                    title: "Select a pipeline to compare"
+                });
+        });
+    });
+</script></td>
+                        <td valign="top"><div class="compared_to">compared to</div></td>
+                        <td width="360px" valign="top"><div class="compare_pipeline_page pipeline">
+    <div class="current_instance" id='compare_pipeline_to'>
+        <input class="compare_pipeline_input" id="to_pipeline" name="to_pipeline" type="text" value="1225" />        <div class="autocomplete"></div>
+        <div class="enhanced_dropdown to hidden">
+            <div class="compare_search_instructions">
+                <p>Search for a pipeline instance by label, commiter, date, etc.</p>
+                <p>or</p>
+                <p><a class="more_pipelines" id="browse_timeline_link_to">
+                    Browse the timeline
+                 </a></p>
+            </div>
+        </div>
+    </div>
+        <div class="selected_pipeline_to stages">
+            <div class="pipeline_details">
+                
+    <div style='width: 48.0%' class="stage">
+        <div class="stage_bar_wrapper">
+                <a href="/go/pipelines/deploy-coreplatform-to-pp-cd/1225/deploy/1">
+                    <div  class="stage_bar Failed" title="deploy (Failed)">
+                        
+                    </div>
+                </a>
+        </div>
+    </div>
+
+    <div style='width: 48.0%' class="stage">
+        <div class="stage_bar_wrapper">
+                <div  class="stage_bar Unknown" title="verify-deploy (Unknown)"></div>
+        </div>
+    </div>
+<div class="triggered_by">
+    <span class='label'>Automatically triggered</span>&nbsp;on&nbsp;<span class='time'>27 Apr, 2016 at 11:54:56 [+0000]</span></div>
+            </div>
+        </div>
+</div>
+
+<script type="text/javascript">
+    Util.on_load(function() {
+        var pipelineSelector = "#to_pipeline";
+        jQuery(pipelineSelector).autocomplete("/go/compare/deploy-coreplatform-to-pp-cd/list/compare_with/1221", {
+            minChars: 1,
+            width: 500,
+            scrollHeight: 500,
+            matchContains: "word",
+            selectFirst: false,
+            autoFill: false,
+            delay: 1000,
+            cacheLength: 0,
+            multiClickTrigger: false,
+            formatItem: function(row, i, max) {
+                return row;
+            },
+            formatMatch: function(row, i, max) {
+                return "";
+            },
+            formatResult: function(row) {
+                return row.value;
+            },
+            parse: function(data) {
+                return data.html;
+            },
+            dataType: 'json',
+            highlight: function(value, term) {
+                return value;//no-op
+            }
+        });
+        jQuery(pipelineSelector).result(function(event, data, formatted) {
+            var dest = compare_path("to", formatted, "1221");
+            if (formatted == -1) { // indicates no match, see list.json.erb
+                resetField(event.target);
+            } else {
+                window.location.href = dest;
+            }
+        });
+        jQuery(pipelineSelector).blur(function(event) {
+            var val = jQuery.trim(jQuery(event.target).val());
+            if (val == "" || val != '1225') {
+                resetField(event.target);
+            }
+        });
+        function resetField(field) {
+            jQuery(field).val('1225');
+        }
+
+        ;
+        function compare_path(suffix, counter, fixed_counter) {
+            if (suffix == "from") {
+                var from_counter = counter;
+                var to_counter = fixed_counter;
+            } else {
+                var from_counter = fixed_counter;
+                var to_counter = counter;
+            }
+            return "/go/compare/deploy-coreplatform-to-pp-cd/" + from_counter + "/with/" + to_counter;
+        }
+
+        var instructionsPopup = new MicroContentPopup(jQuery('.enhanced_dropdown.to').get(0), new MicroContentPopup.NoOpHandler());
+        var instructionsPopupShower = new MicroContentPopup.ClickShower(instructionsPopup);
+        jQuery(pipelineSelector).bind('keypress', function(event){
+            instructionsPopupShower.close();
+        });
+        instructionsPopupShower.bindShowButton( jQuery(pipelineSelector).get(0));
+
+        jQuery("#browse_timeline_link_to").click(function(event) {
+           Modalbox.show('/go/compare/deploy-coreplatform-to-pp-cd/timeline/1?other_pipeline_counter=1221&amp;suffix=to',
+                {
+                    overlayClose: false,
+                    title: "Select a pipeline to compare"
+                });
+        });
+    });
+</script></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script src="/go/gadgets/js/rpc.js?v=1.1-beta5" type="text/javascript"></script>
+<script type="text/javascript">
+    Util.on_load(function() {
+        tw_gadget.init('/go/gadgets/ifr');
+    });
+</script>
+<div class="clear-float"></div>
+<div class="sub_tab_container rounded-corner-for-tab-container">
+    <div class="sub_tabs_container">
+        <ul>
+            <li class="checkins current_tab">
+                <a class="tab_button_body_match_text">checkins</a>
+                <a>Changes</a>
+            </li>
+            <li class="card_activity">
+                <a class="tab_button_body_match_text">card_activity</a>
+                <a>Card Activity</a>
+            </li>
+        </ul>
+    </div>
+    <div class="sub_tab_container_content">
+        <div id="tab-content-of-card_activity">
+                        <div id="card_activity_gadget" class="gadget-container">
+                    <div class="information">No mingle project configured for this pipeline. <a href="http://www.go.cd/documentation/user/current/integration/mingle_card_activity_gadget.html" target="_blank">More Information</a></div>
+                <!-- gadget goes here -->
+            </div>
+        </div>
+        <div id="tab-content-of-checkins" class="material_revision_diff">
+                        <div style="padding: 1em;">
+                
+        <div>
+    <div class="material_title">
+        <strong> Git - URL: ssh://git@github.company.co.uk/Core-Platform/risk-management-service.git, Branch: master</strong>
+    </div>
+    <table class="list_table material_modifications">
+        <tr>
+            <th class="revision">Revision</th>
+            <th class="modified_by">Modified by</th>
+            <th class="comment">Comment: </th>
+        </tr>
+            <tr class="change">
+                <td class="revision">
+                    3f012e4ceb64ca1<wbr/>55af94a0d<wbr/>11fc0a60b8df887f                </td>
+                <td class="modified_by">
+                    bla.bla &lt<wbr/>;bla.k<wbr/>oak@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>27T10:27:39+00:<wbr/>00                </td>
+<td class="comment">
+                        <a>CRP-1450</a>                </td>
+
+                <td class="comment">
+                        <p>CRP-1450 lower jacoco coverate so we can build temporarily</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    639bee6c7da54c2<wbr/>db72e053b<wbr/>9cd5fe5e5b7e8370                </td>
+                <td class="modified_by">
+                    bla.bla &lt<wbr/>;bla.k<wbr/>bla@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T14:18:36+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>Merge remote-tracking branch 'upstream/master'</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    f0eb1c4d6b2b8c1<wbr/>46da70c25<wbr/>92113dfc33ac9155                </td>
+                <td class="modified_by">
+                    bla.bla &lt<wbr/>;bla.bla<wbr/>oak@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T12:10:20+00:<wbr/>00                </td>
+<td class="comment">                         <a>CRP-0000</a>                </td> 
+
+                <td class="comment">
+                        <p>CRP-0000 No story - add missing test for creating risk profile</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    f2389a18e343f60<wbr/>ebb61bde4<wbr/>42c4fd4a41964c17                </td>
+                <td class="modified_by">
+                    bla bla<wbr/>ci &lt;St<wbr/>John.smith1<wbr/>john@Company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T11:04:32+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>Merge pull request #151 from robert-koak/master</p>
+
+<p>CPMEMBER-2690 [M1] [FE] [BE] Fix handling of evidence linked to a cas&hellip;</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    7668d6183d630c6<wbr/>b8a523135<wbr/>1f9d11668e33f745                </td>
+                <td class="modified_by">
+                    bla.bla &lt<wbr/>;bla.bla<wbr/>oak@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T08:53:26+00:<wbr/>00                </td>
+<td class="comment">                         <a>CPMEMBER-2690</a>                </td> 
+
+                <td class="comment">
+                        <p>CPMEMBER-2690 [M1] [FE] [BE] Fix handling of evidence linked to a case file
+<br />CPMEMBER-2730 [BE] Remove full evidence list payload form supplementary evidence node</p>                </td>
+            </tr>
+    </table>
+
+        </div>
+
+        <div>
+    <div class="material_title">
+        <strong> Git - URL: ssh://git@github.company.co.uk/Core-Platform/gaming-gateway-service.git, Branch: master</strong>
+    </div>
+    <table class="list_table material_modifications">
+        <tr>
+            <th class="revision">Revision</th>
+            <th class="modified_by">Modified by</th>
+            <th class="comment">Comment: </th>
+        </tr>
+            <tr class="change">
+                <td class="revision">
+                    6ec4cad7d661e07<wbr/>a2afb409d<wbr/>f61b5335135e8355                </td>
+                <td class="modified_by">
+                    john smith &lt<wbr/>;john.o<wbr/>usa@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>26T10:19:34+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>Merge pull request #126 from Pedro-Sousa/master</p>
+
+<p>CRP-1452 : Corrected url</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    1991df25f4c9897<wbr/>df2c78560<wbr/>d902499799bee3ae                </td>
+                <td class="modified_by">
+                    john.mell &lt<wbr/>;john.mell<wbr/>usa@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>26T10:17:38+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>CRP-1452 : Corrected url</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    3ad0b755c985fc5<wbr/>9342fcbbd<wbr/>e56161178614479a                </td>
+                <td class="modified_by">
+                    Pedro Sousa &lt<wbr/>;Pedro.So<wbr/>usa@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T18:31:44+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>Merge pull request #125 from Pedro-Sousa/master</p>
+
+<p>CRP-1452 : Changed way updateUrl is used</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    2b9205bdd003450<wbr/>ee7756647<wbr/>ad4df984d88c983b                </td>
+                <td class="modified_by">
+                    john.mell &lt<wbr/>;john.mell<wbr/>usa@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T18:09:51+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>CRP-1452 : Changed way updateUrl is used</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    18b6b46745a6a00<wbr/>7c75cc60d<wbr/>3827bb4b3fd2b4b3                </td>
+                <td class="modified_by">
+                    John smith23 Underwood <wbr/>&lt;joch.<wbr/>smith<wbr/>@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T16:02:28+00:<wbr/>00                </td>
+                <td class="comment">
+                        <p>Merge pull request #124 from gary-underwood/master</p>
+
+<p>CRP-1452 Correcting host and port env variable name.</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    ca2c8ec0b893bb4<wbr/>8f22690c8<wbr/>75ead041f69029cb                </td>
+                <td class="modified_by">
+                    john ken <wbr/>&lt;gary.<wbr/>ken<wbr/>@company.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T16:04:22+00:<wbr/>00                </td>
+
+<td class="comment">
+                        <a>CRP-1452</a>                </td>
+                <td class="comment">
+                        <p>CRP-1452 Correcting host and port env variable name.</p>                </td>
+            </tr>
+            <tr class="change">
+                <td class="revision">
+                    eff4dd44d07cb25<wbr/>b3d7951ac<wbr/>64cf418cb04fca66                </td>
+                <td class="modified_by">
+                    dick wan &<wbr/>lt;wal<wbr/>.dick@g<wbr/>amesys.co.uk&gt;                    <br/>
+                    2016-<wbr/>04-<wbr/>25T13:17:54+00:<wbr/>00                </td>
+<td class="comment">
+                        <a>CRP-1453</a>                </td>
+
+                <td class="comment">
+                        <p>CRP-1453 Added account security coreplatform client config to increase timeout</p>                </td>
+            </tr>
+    </table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - member-<wbr/>workstream-<wbr/>1.x</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/member-workstream-1.x/1353/build/1">member-workstream-1.x/1353/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/member-workstream-1.x/1353">1.x.1353</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>27T11:00:54+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - gaming-<wbr/>workstream-<wbr/>1.x</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-workstream-1.x/805/build/1">gaming-workstream-1.x/805/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-workstream-1.x/805">1.x.805</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>26T10:48:52+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-workstream-1.x/804/build/1">gaming-workstream-1.x/804/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-workstream-1.x/804">1.x.804</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T19:03:06+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-workstream-1.x/803/build/1">gaming-workstream-1.x/803/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-workstream-1.x/803">1.x.803</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T16:38:25+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - coreplatform-<wbr/>1.x</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/coreplatform-1.x/2208/build/1">coreplatform-1.x/2208/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/coreplatform-1.x/2208">1.x.2208</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>27T11:15:02+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/coreplatform-1.x/2207/build/1">coreplatform-1.x/2207/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/coreplatform-1.x/2207">1.x.2207</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>26T11:02:06+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/coreplatform-1.x/2206/build/1">coreplatform-1.x/2206/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/coreplatform-1.x/2206">1.x.2206</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T19:16:02+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/coreplatform-1.x/2205/build/1">coreplatform-1.x/2205/build/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/coreplatform-1.x/2205">1.x.2205</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T16:52:16+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - risk-<wbr/>management-<wbr/>service-<wbr/>1.x</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/risk-management-service-1.x/259/generate-ansible-playbooks/1">risk-management-service-1.x/259/generate-ansible-playbooks/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/risk-management-service-1.x/259">1.x.259</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>27T10:51:05+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - deploy-<wbr/>coreplatform-<wbr/>to-<wbr/>coreplatform-<wbr/>cd</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/deploy-coreplatform-to-coreplatform-cd/1914/verify-deploy/1">deploy-coreplatform-to-coreplatform-cd/1914/verify-deploy/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/deploy-coreplatform-to-coreplatform-cd/1914">1914</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>27T11:53:42+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/deploy-coreplatform-to-coreplatform-cd/1913/verify-deploy/1">deploy-coreplatform-to-coreplatform-cd/1913/verify-deploy/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/deploy-coreplatform-to-coreplatform-cd/1913">1913</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>26T16:56:48+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/deploy-coreplatform-to-coreplatform-cd/1910/verify-deploy/1">deploy-coreplatform-to-coreplatform-cd/1910/verify-deploy/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/deploy-coreplatform-to-coreplatform-cd/1910">1910</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T19:47:59+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/deploy-coreplatform-to-coreplatform-cd/1909/verify-deploy/1">deploy-coreplatform-to-coreplatform-cd/1909/verify-deploy/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/deploy-coreplatform-to-coreplatform-cd/1909">1909</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T17:24:18+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+        <div>
+    <div class="material_title">
+    <strong> Pipeline - gaming-<wbr/>gateway-<wbr/>service-<wbr/>1.x</strong>
+</div>
+<table class="list_table dependency_material_modifications">
+    <tr>
+        <th class="dmr revision">Revision</th>
+        <th class="dmr label">Label</th>
+        <th class="dmr completed_at">Completed at</th>
+    </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-gateway-service-1.x/218/generate-ansible-playbooks/1">gaming-gateway-service-1.x/218/generate-ansible-playbooks/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-gateway-service-1.x/218">1.x.218</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>26T10:40:37+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-gateway-service-1.x/217/generate-ansible-playbooks/1">gaming-gateway-service-1.x/217/generate-ansible-playbooks/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-gateway-service-1.x/217">1.x.217</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T18:55:13+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-gateway-service-1.x/216/generate-ansible-playbooks/1">gaming-gateway-service-1.x/216/generate-ansible-playbooks/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-gateway-service-1.x/216">1.x.216</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T16:30:00+00:<wbr/>00            </td>
+        </tr>
+        <tr class="change">
+            <td class="revision">
+                <a href="/go/pipelines/gaming-gateway-service-1.x/215/generate-ansible-playbooks/1">gaming-gateway-service-1.x/215/generate-ansible-playbooks/1</a>            </td>
+            <td class="label">
+                <a href="/go/pipelines/value_stream_map/gaming-gateway-service-1.x/215">1.x.215</a>            </td>
+            <td class="completed_at">
+                2016-<wbr/>04-<wbr/>25T13:44:00+00:<wbr/>00            </td>
+        </tr>
+</table>
+
+        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    new TabsManager(undefined, 'comparison_page', 'deploy-coreplatform-to-pp-cd>', 'checkins');
+</script>
+        </div></div>
+    </div>
+
+    <div id='footer'>
+        <ul class="copyright" onclick="dashboard_periodical_executer.stop();">
+    <li>Copyright &copy; 2016 <a href="http://www.thoughtworks.com/products" target='_blank'>ThoughtWorks, Inc.</a> Licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0" target="_blank">Apache License, Version 2.0</a>. Go includes <a href="/go/NOTICE/cruise_notice_file.pdf" target="_blank">third-party software</a>.</li>
+    <li class="last">Go Version: 16.3.0(3183-60d6fd31f00527da00f2affdd8f7f7732e7be103)</li>
+</ul>
+<ul class="links">
+    <li><a href="/go/cctray.xml">(cc) CCTray Feed</a></li>
+    <li><a href="http://api.go.cd" target="_blank">APIs</a></li>
+    <li><a href="http://www.go.cd/community/plugins.html" target="_blank">Plugins</a></li>
+    <li><a href="http://www.go.cd/community/resources.html" target="_blank">Community</a></li>
+    <li><a href="/go/about">Server Details</a></li>
+    <li class="last"><a href="https://go.cd/help" target="_blank">Need Help?</a></li>
+</ul>
+    <script type="text/javascript">
+        var updater = new VersionUpdater('https://cd.core.company.corp/go/api/version_infos/stale', 'https://cd.core.company.corp/go/api/version_infos/go_server');
+        updater.update();
+    </script>
+
+    </div>
+</div>
+</body>
+</html>
+
